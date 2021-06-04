@@ -316,6 +316,7 @@ class VideoList extends Component {
         label: intl.formatMessage(intlMessages['mirrorLabel']),
         description: intl.formatMessage(intlMessages['mirrorDesc']),
         onClick: () => this.mirrorCamera(stream),
+        icon: 'refresh'
       }];
 
       if (numOfStreams > 2) {
@@ -324,6 +325,7 @@ class VideoList extends Component {
           label: intl.formatMessage(intlMessages[`${isFocusedIntlKey}Label`]),
           description: intl.formatMessage(intlMessages[`${isFocusedIntlKey}Desc`]),
           onClick: () => this.handleVideoFocus(stream),
+          icon: isFocused ? 'exit_fullscreen' : 'fullscreen'
         });
       }
 

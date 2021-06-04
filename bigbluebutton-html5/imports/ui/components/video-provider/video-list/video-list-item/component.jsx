@@ -4,6 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import cx from 'classnames';
+import Button from '/imports/ui/components/button/component';
 import Dropdown from '/imports/ui/components/dropdown/component';
 import DropdownTrigger from '/imports/ui/components/dropdown/trigger/component';
 import DropdownContent from '/imports/ui/components/dropdown/content/component';
@@ -147,6 +148,17 @@ class VideoListItem extends Component {
     ]);
   }
 
+  getAvailableActionsOnButtons() {
+    const {
+      actions,
+      cameraId,
+    } = this.props;
+
+    return _.compact([
+      ...actions.map(action => (<Button key={`${cameraId}-${action.actionName}`} size="sm" color="default" circle hideLabel ghost {...action} />)),
+    ]);
+  }
+
   updateOrientation() {
     this.setState({ isPortrait: deviceInfo.isPortrait() });
   }
@@ -184,6 +196,7 @@ class VideoListItem extends Component {
       mirrored,
     } = this.props;
     const availableActions = this.getAvailableActions();
+    const availableActionOnButtons = this.getAvailableActionsOnButtons();
     const enableVideoMenu = Meteor.settings.public.kurento.enableVideoMenu || false;
     const shouldRenderReconnect = !isStreamHealthy && videoIsReady;
 
@@ -241,7 +254,9 @@ class VideoListItem extends Component {
           <div className={styles.info}>
             {enableVideoMenu && availableActions.length >= 3
               ? (
-                <Dropdown tethered={isTethered} placement="right bottom" className={isFirefox ? styles.dropdownFireFox : styles.dropdown}>
+                <div>
+                  {availableActionOnButtons}
+                { false && <Dropdown tethered={isTethered} placement="right bottom" className={isFirefox ? styles.dropdownFireFox : styles.dropdown}>
                   <DropdownTrigger className={styles.dropdownTrigger}>
                     <span>{name}</span>
                   </DropdownTrigger>
@@ -250,7 +265,8 @@ class VideoListItem extends Component {
                       {availableActions}
                     </DropdownList>
                   </DropdownContent>
-                </Dropdown>
+                </Dropdown>}
+                </div>
               )
               : (
                 <div className={isFirefox ? styles.dropdownFireFox
