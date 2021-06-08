@@ -95,19 +95,6 @@ class ActionsBar extends PureComponent {
               />
             )
             : null}
-          {isCaptionsAvailable
-            ? (
-              <CaptionsButtonContainer {...{ intl }} />
-            )
-            : null}
-        </div>
-        <div className={styles.center}>
-          <AudioControlsContainer />
-          {enableVideo
-            ? (
-              <JoinVideoOptionsContainer />
-            )
-            : null}
           <ScreenshareButtonContainer {...{
             amIPresenter,
             isMeteorConnected,
@@ -119,6 +106,19 @@ class ActionsBar extends PureComponent {
                 toggleSwapLayout={toggleSwapLayout}
                 isThereCurrentPresentation={isThereCurrentPresentation}
               />
+            )
+            : null}
+          {isCaptionsAvailable
+            ? (
+              <CaptionsButtonContainer {...{ intl }} />
+            )
+            : null}
+        </div>
+        <div className={styles.center}>
+          <AudioControlsContainer />
+          {enableVideo
+            ? (
+              <JoinVideoOptionsContainer />
             )
             : null}
         </div>
